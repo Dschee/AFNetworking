@@ -8,10 +8,10 @@ Pod::Spec.new do |s|
   s.authors  = { 'Mattt Thompson' => 'm@mattt.me' }
   s.source   = { :git => 'https://github.com/AFNetworking/AFNetworking.git', :tag => s.version, :submodules => true }
   s.requires_arc = true
-  
+
   s.public_header_files = 'AFNetworking/AFNetworking.h'
   s.source_files = 'AFNetworking/AFNetworking.h'
-  
+
   pch_AF = <<-EOS
 #ifndef TARGET_OS_IOS
   #define TARGET_OS_IOS TARGET_OS_IPHONE
@@ -22,16 +22,18 @@ Pod::Spec.new do |s|
 #endif
 EOS
   s.prefix_header_contents = pch_AF
-  
+
   s.ios.deployment_target = '7.0'
+  s.tvos.deployment_target = '9.0'
   s.osx.deployment_target = '10.9'
   s.watchos.deployment_target = '2.0'
-  
+
   s.subspec 'Serialization' do |ss|
     ss.source_files = 'AFNetworking/AFURL{Request,Response}Serialization.{h,m}'
     ss.public_header_files = 'AFNetworking/AFURL{Request,Response}Serialization.h'
     ss.watchos.frameworks = 'MobileCoreServices', 'CoreGraphics'
     ss.ios.frameworks = 'MobileCoreServices', 'CoreGraphics'
+    ss.tvos.frameworks = 'MobileCoreServices', 'CoreGraphics'
     ss.osx.frameworks = 'CoreServices'
   end
 
@@ -42,6 +44,7 @@ EOS
   end
 
   s.subspec 'Reachability' do |ss|
+    ss.tvos.deployment_target = '9.0'
     ss.ios.deployment_target = '7.0'
     ss.osx.deployment_target = '10.9'
 
@@ -52,6 +55,7 @@ EOS
   end
 
   s.subspec 'NSURLConnection' do |ss|
+    ss.tvos.deployment_target = '9.0'
     ss.ios.deployment_target = '7.0'
     ss.osx.deployment_target = '10.9'
 
@@ -64,11 +68,13 @@ EOS
   end
 
   s.subspec 'NSURLSession' do |ss|
+    ss.tvos.deployment_target = '9.0'
     ss.ios.deployment_target = '7.0'
     ss.osx.deployment_target = '10.9'
     ss.watchos.deployment_target = '2.0'
-    
+
     ss.dependency 'AFNetworking/Serialization'
+    ss.tvos.dependency 'AFNetworking/Reachability'
     ss.ios.dependency 'AFNetworking/Reachability'
     ss.osx.dependency 'AFNetworking/Reachability'
     ss.dependency 'AFNetworking/Security'
@@ -78,7 +84,7 @@ EOS
   end
 
   s.subspec 'UIKit' do |ss|
-    ss.platform = :ios
+    ss.platform = :tvos
     ss.dependency 'AFNetworking/NSURLConnection'
     ss.dependency 'AFNetworking/NSURLSession'
 
