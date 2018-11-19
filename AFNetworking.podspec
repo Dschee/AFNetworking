@@ -84,7 +84,7 @@ EOS
   end
 
   s.subspec 'UIKit' do |ss|
-    ss.platform = :tvos
+    ss.platform = :ios
     ss.dependency 'AFNetworking/NSURLConnection'
     ss.dependency 'AFNetworking/NSURLSession'
 
